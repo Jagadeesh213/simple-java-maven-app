@@ -1,4 +1,4 @@
-- 
+
     - name: copy war file from jenkins to tomcat
       copy:
         src: webapp/target/webapp.war
