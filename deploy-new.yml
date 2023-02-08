@@ -5,3 +5,4 @@
       copy:
         src: webapp/target/webapp.war
         dest: /opt/tomcat/webapps/
+        deploy adapters: [tomcat8(path: '/opt/tomcat/webapps/target', url: '')], contextPath: null, war: '**/*.war'
