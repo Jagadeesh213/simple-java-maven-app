@@ -2,7 +2,7 @@ node {
 
 stage (‘Prepare environment’) {
 
-git branch: ‘development’, url: ‘git@bitbucket.org:example/myapp.git’
+git branch: ‘development’, url: ‘https://github.com/Jagadeesh213/simple-java-maven-app.git’
 
 sh ‘npm install’
 
