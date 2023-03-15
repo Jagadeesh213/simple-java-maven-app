@@ -29,3 +29,17 @@ sh ‘npm run build’
 }
 
 }
+stage (‘Deploy’) {
+
+sh ‘ssh ubuntu@3.109.32.144 rm -rf /var/www/temp_deploy/dist/’
+
+sh ‘ssh ubuntu@3.109.32.144 mkdir -p /var/www/temp_deploy’
+
+sh ‘scp -r dist ubuntu@3.109.32.144:/var/www/temp_deploy/dist/’
+
+sh ‘ssh ubuntu@3.109.32.144 “rm -rf /var/www/example.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/example.com/”’
+
+}
+
+}
+
