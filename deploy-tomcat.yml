@@ -10,7 +10,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                           branches: [[name: '*/master']],
                                 extensions: [[$class: 'CleanCheckout']],
-                                userRemoteConfigs: [[url: 'https://' + env.github_token + '@' + 'github.com/sk617/simple-java-maven-app.git']]
+                                userRemoteConfigs: [[url: 'https://' + env.github_token + '@' + 'github.com/Jagadeesh213/simple-java-maven-app.git']]
                        ])
               }
             }
