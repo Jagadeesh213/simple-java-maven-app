@@ -24,7 +24,7 @@ pipeline {
   stage: deploy
   image: tomcat:8.0-jre11
   script:
-    - curl -T target/*.war "http://tomcat:8080/manager/text/deploy?path=/myapp&update=true" --user tomcat:secret 
+    - curl -T target/*.war "http://tomcat:8080/manager/text/deploy?path=/myapp&update=true" --user admin:admin 
             }
           }
        }
