@@ -1,32 +1,31 @@
-pipeline {
-    agent any
-    tools {
-        maven "LocalMVN"
-    }
-    stages {
-        stage('Checkout') {
-            steps {
-              withCredentials([string(credentialsId: 'GitHub_Token', variable: 'github_token')]) {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/master']],
-                                extensions: [[$class: 'CleanCheckout']],
-                                userRemoteConfigs: [[url: 'https://' + env.github_token + '@' + 'github.com/Jagadeesh213/simple-java-maven-app.git']]
-                       ])
-              }
-            }
-        }
-        stage('Build') {
-            steps {
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
-            }
-        }
-       deploy:
-  stage: deploy
-  image: tomcat:8.0-jre11
-  script:
-    - curl -T target/*.war "http://tomcat:8080/manager/text/deploy?path=/myapp&update=true" --user admin:admin 
-            }
-          }
-       }
-    }
+node {
+
+stage (‘Prepare environment’) {
+
+git branch: ‘development’, url: ‘git@bitbucket.org:example/myapp.git’
+
+sh ‘npm install’
+
+}
+
+stage (‘Code analyse’) {
+
+sh ‘echo “Run some lints”’
+
+}
+
+stage (‘Unit test’) {
+
+sh ‘echo “Tests will back”’
+
+}
+
+stage (‘Build’) {
+
+sh ‘npm run clean’
+
+sh ‘npm run build’
+
+}
+
 }
