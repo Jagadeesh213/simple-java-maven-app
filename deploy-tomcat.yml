@@ -30,4 +30,20 @@ sh ‘npm run build’
 
 }
 
-
+stage('Deploy') {
+  agent any
+  steps {
+    sh 'mv sample/webapp/target/webapp.war webapp.war'
+    sshPublisher(
+      continueOnError: false, 
+      failOnError: true,
+      publishers: [
+        sshPublisherDesc(
+          configName: "my-ssh-connection",
+          transfers: [sshTransfer(sourceFiles: 'webapp.war')],
+          verbose: true
+        )
+      ]
+    )
+  }
+}
