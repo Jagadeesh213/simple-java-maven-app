@@ -20,27 +20,11 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
             }
         }
-        stage('Push artifacts into artifactory') {
-            steps {
-              rtUpload (
-                serverId: 'my-artifactory',
-                spec: '''{
-                      "files": [
-                        {
-                          "pattern": "*.war",
-                          "target": "example-repo-local/build-files/"
-                        }
-                    ]
-                }'''
-              )
-          }
-        }
-        stage('Pull artifacts & deploy on tomcat') {
-            steps{
-                  withCredentials([usernamePassword(credentialsId: 'my-artifactory-cred',
-                                      usernameVariable: 'tomcat',
-                                      passwordVariable: 'secret')]) {
-                    sh 'ssh ubuntu@149.158.89.34 curl -u ' + tomcat + ':' + secret + ' -X GET "Your_JFrog_Artifactory_URL_of_file" --output /opt/tomcat8/webapps/deploy.war'
+       deploy:
+  stage: deploy
+  image: tomcat:8.0-jre11
+  script:
+    - curl -T target/*.war "http://tomcat:8080/manager/text/deploy?path=/myapp&update=true" --user tomcat:secret 
             }
           }
        }
