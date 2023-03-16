@@ -30,6 +30,21 @@ sh ‘npm run build’
 
 }
 
+withCredentials([sshUserPrivateKey(
+    credentialsId: 'server', 
+    usernameVariable: 'USER', 
+    keyFileVariable: 'KEY_FILE'),
+    string(credentialsId: 'server-ip', variable: 'EC2_IP')
+]) {
+    def remote = [:]
+    remote.name = USER
+    remote.host = EC2_IP
+    remote.user = USER
+    remote.identityFile = KEY_FILE
+    remote.allowAnyHosts = true
+    sshCommand remote: remote, command: "pwd"
+}
+
 stage('Deploy') {
   agent any
   steps {
