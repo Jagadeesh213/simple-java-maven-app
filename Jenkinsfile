@@ -31,6 +31,7 @@ pipeline {
     
     stage('Deploy to tomcat') {
       steps {
+        ssh stan@65.2.137.12 /root/opt/tomcat
       sh 'sudo scp -i  **/*.war  ubuntu@65.2.137.12:/opt/tomcat'
 //          sh 'sudo ansible-playbook deploy-new.yml'
       }
