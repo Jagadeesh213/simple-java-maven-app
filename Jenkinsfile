@@ -31,7 +31,7 @@ pipeline {
     
     stage('Deploy to tomcat') {
       steps {
-        sh 'sudo scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no mavenbuild/webapp/target/webapp.war ubuntu@15.206.146.118:/opt/tomcat
+        sh 'scp -v -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mavenbuild/webapp/target/webapp.war ubuntu@15.206.146.118:/opt/tomcat/webapps/webapp.war'
 echo $
 //          sh 'sudo ansible-playbook deploy-new.yml'
       }
