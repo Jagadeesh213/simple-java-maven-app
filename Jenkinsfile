@@ -32,6 +32,7 @@ pipeline {
     stage('Deploy to tomcat') {
       steps {
         sh 'sudo scp -i  /mavenbuild/webapp/target/webapp.war  ubuntu@65.2.137.12:/opt/tomcat'
+        echo$
 //          sh 'sudo ansible-playbook deploy-new.yml'
       }
     }
