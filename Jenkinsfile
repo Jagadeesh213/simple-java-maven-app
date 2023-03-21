@@ -30,7 +30,7 @@ pipeline {
     
     stage('Deploy to tomcat') {
       steps {
-      sh 'sudo scp -i  /var/lib/jenkins/workspace/mavenbuild/webapp/target/webapp.war  ubuntu@15.206.170.20:/opt/tomcat/webapps'
+      sh 'sudo scp -i  /var/lib/jenkins/workspace/mavenbuild/webapp/target/webapp.war  ubuntu@65.2.137.12:/opt/tomcat/webapps'
 //          sh 'sudo ansible-playbook deploy-new.yml'
       }
     }
