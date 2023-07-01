@@ -31,15 +31,15 @@ sh ‘npm run build’
 }
 
 withCredentials([sshUserPrivateKey(
-    credentialsId: 'server', 
-    usernameVariable: 'USER', 
+    credentialsId: 'cd0784ff-9e4a-494d-ba1a-568b324be40c', 
+    usernameVariable: 'root', 
     keyFileVariable: 'KEY_FILE'),
-    string(credentialsId: 'server-ip', variable: 'EC2_IP')
+    string(credentialsId: '13.233.85.150', variable: 'EC2_IP')
 ]) {
     def remote = [:]
     remote.name = USER
     remote.host = EC2_IP
-    remote.user = USER
+    remote.user = root
     remote.identityFile = KEY_FILE
     remote.allowAnyHosts = true
     sshCommand remote: remote, command: "pwd"
@@ -48,7 +48,7 @@ withCredentials([sshUserPrivateKey(
 stage('Deploy') {
   agent any
   steps {
-    sh 'mv sample/webapp/target/webapp.war webapp.war'
+    sh 'mv test/webapp/target/webapp.war webapp.war'
     sshPublisher(
       continueOnError: false, 
       failOnError: true,
