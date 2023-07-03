@@ -31,7 +31,12 @@ pipeline {
     
     stage('Deploy to tomcat') {
       steps {
-        sh 'scp -v -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/mavenbuild/webapp/target/webapp.war root@65.0.26.132:/opt/tomcat/webapps/webapp.war'
+        sh sshagent(credentials: ['27b86657-ba75-4b78-9ad6-8a9146bfbb3a']) {
+                    sh 'ssh root@tomcat-server "sudo systemctl stop tomcat"'
+                    sh 'ssh root@tomcat-server "rm -rf /opt/tomcat/webapps"'
+                    sh 'scp /var/lib/jenkins/workspace/mavenbuild/target/webapp/webapp.war root@tomcat-server:/opt/tomcat/webapps'
+                    sh 'ssh root@tomcat-server "sudo systemctl start tomcat"'
+                    ssh -oStrictHostKeyChecking=no host
 echo $
 //          sh 'sudo ansible-playbook deploy-new.yml'
       }
